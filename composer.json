@@ -1,0 +1,19 @@
+{
+  "name": "zak956/yaml-pimple-config-service-provider",
+  "description": "Pimple ServiceProvider for using YAML configuration files",
+  "keywords": ["pimple", "yaml", "yml", "config"],
+  "license": "MIT",
+  "authors": [{
+    "name": "Aliaksandr Zakashanski",
+    "email": "zak956@gmail.com"
+  }],
+
+  "require": {
+    "pimple/pimple": "^3.0",
+    "symfony/yaml": "^3.0"
+  },
+
+  "autoload": {
+    "psr-0": { "zak956\\Pimple": "src" }
+  }
+}
