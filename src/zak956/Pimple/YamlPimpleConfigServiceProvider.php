@@ -122,7 +122,9 @@ class YamlPimpleConfigServiceProvider implements ServiceProviderInterface
                 sprintf("The config file '%s' does not exist.", $this->filename));
         }
 
-        return $config = Yaml::parse(file_get_contents($this->filename)) ?? [];
+        $config = Yaml::parse(file_get_contents($this->filename));
+
+        return is_null($config) ? [] : $config;
 
     }
 }
