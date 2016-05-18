@@ -13,7 +13,7 @@ use Pimple\ServiceProviderInterface;
 use Symfony\Component\Yaml\Yaml;
 
 
-class YamlPimpleConfigServiceProvider implements ServiceProviderInterface, \ArrayAccess
+class YamlPimpleConfigServiceProvider implements ServiceProviderInterface
 {
     const DEFAULT_PREFIX = 'config';
 
@@ -70,7 +70,9 @@ class YamlPimpleConfigServiceProvider implements ServiceProviderInterface, \Arra
 
         foreach ($config as $key => $value) {
             if ($pimple->offsetExists($key) && is_array($value)) {
-                $pimple->offsetSet($key, $this->mergeRecursively($pimple->offsetGet($key), $value));
+                $oldValue = $pimple->offsetGet($key);
+                $pimple->offsetUnset($key);
+                $pimple->offsetSet($key, $this->mergeRecursively($oldValue, $value));
             } else {
                 $pimple->offsetSet($key, $this->doReplacements($value));
             }
@@ -126,25 +128,5 @@ class YamlPimpleConfigServiceProvider implements ServiceProviderInterface, \Arra
 
         return is_null($config) ? [] : $config;
 
-    }
-
-    public function offsetExists($offset)
-    {
-        // TODO: Implement offsetExists() method.
-    }
-
-    public function offsetGet($offset)
-    {
-        // TODO: Implement offsetGet() method.
-    }
-
-    public function offsetSet($offset, $value)
-    {
-        // TODO: Implement offsetSet() method.
-    }
-
-    public function offsetUnset($offset)
-    {
-        // TODO: Implement offsetUnset() method.
     }
 }
