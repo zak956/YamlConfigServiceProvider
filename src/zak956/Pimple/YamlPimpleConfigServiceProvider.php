@@ -79,10 +79,10 @@ class YamlPimpleConfigServiceProvider implements ServiceProviderInterface
         }
     }
 
-    private function mergeRecursively(array $currentValue, array $newValue)
+    private function mergeRecursively($currentValue, $newValue)
     {
         foreach ($newValue as $key => $value) {
-            if (is_array($value) && isset($currentValue[$key])) {
+            if ((is_array($value) || is_object($value)) && isset($currentValue[$key])) {
                 $currentValue[$key] = $this->mergeRecursively($currentValue[$key], $value);
             } else {
                 $currentValue[$key] = $this->doReplacements($value);
